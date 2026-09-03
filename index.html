@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beranda - Digital Portfolio 3D</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+    <div id="bg-3d-canvas"></div>
+
+    <header id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo"><div class="logo-icon">P</div><span>Portfolio<span>.</span></span></a>
+            <nav class="nav-links">
+                <a href="index.html" class="nav-link active">Home</a>
+                <a href="tentang.html" class="nav-link">About</a>
+                <a href="proyek.html" class="nav-link">Projects</a>
+                <a href="jaringan.html" class="nav-link">Modules</a>
+                <a href="kontak.html" class="nav-link">Contact</a>
+                <a href="kontak.html" class="connect-btn">Connect</a>
+            </nav>
+            <button class="mobile-menu-btn" id="mobile-menu-btn"><i data-lucide="menu" style="width:24px; height:24px;"></i></button>
+        </div>
+        <div class="mobile-menu" id="mobile-menu">
+            <a href="index.html" class="mobile-nav-link">Home</a>
+            <a href="tentang.html" class="mobile-nav-link">About</a>
+            <a href="proyek.html" class="mobile-nav-link">Projects</a>
+            <a href="jaringan.html" class="mobile-nav-link">Modules</a>
+            <a href="kontak.html" class="mobile-nav-link">Contact</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section (Beranda) -->
+        <section id="home">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <div class="badge"><span class="pulse-dot"></span>HELLO, Saya </div>
+                    <h1>AKHMAD GAZA GHOZALI</h1>
+                    <h2 class="subtitle">Student • Developer • Creative Technologist</h2>
+                    <p class="hero-desc">Selamat datang di portofolio digital saya. Website ini merupakan dokumentasi perjalanan belajar, karya, proyek, dan pengalaman saya selama berada di kelas XII.</p>
+                    <div class="hero-btns">
+                        <a href="proyek.html" class="btn-primary">Explore My Work <i data-lucide="arrow-right" style="width:16px; height:16px;"></i></a>
+                        <button onclick="alertNotification('Mengunduh CV... (Mock Download)')" class="btn-secondary">Download CV <i data-lucide="download" style="width:16px; height:16px;"></i></button>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div id="hero-3d-canvas"></div>
+                    <div class="floating-card card-1">
+                        <div class="card-icon purple"><i data-lucide="code" style="width:20px; height:20px;"></i></div>
+                        <div class="card-info"><h4>12+ Projects</h4><p>Completed</p></div>
+                    </div>
+                    <div class="floating-card card-2">
+                        <div class="card-icon teal"><i data-lucide="layers" style="width:20px; height:20px;"></i></div>
+                        <div class="card-info"><h4>Creative Developer</h4><p>Class XII</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-logo">Portfolio<span>.</span></div>
+        <p>Digital Portfolio Class XII • Built with HTML, Native CSS & Three.js</p>
+        <div class="copyright">© 2026 AKHMAD GAZA GHOZALI. All Rights Reserved.</div>
+    </footer>
+
+    <div id="notification-box"><div class="toast-dot"></div><span id="notification-text">Notifikasi</span></div>
+
+    <!-- SCRIPT UTAMA UNTUK SEMUA HALAMAN -->
+    <script>
+        lucide.createIcons();
+        function alertNotification(message) {
+            const box = document.getElementById('notification-box');
+            const text = document.getElementById('notification-text');
+            text.innerText = message;
+            box.classList.add('show');
+            setTimeout(() => { box.classList.remove('show'); }, 3000);
+        }
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuBtn.addEventListener('click', () => { mobileMenu.classList.toggle('open'); });
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('navbar');
+            if (window.scrollY > 20) header.classList.add('scrolled');
+            else header.classList.remove('scrolled');
+        });
+
+        const initBgScene = () => {
+            const container = document.getElementById('bg-3d-canvas');
+            if (!container) return;
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 50;
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            container.appendChild(renderer.domElement);
+            
+            const starGeo = new THREE.BufferGeometry();
+            const starPos = new Float32Array(3000 * 3);
+            for(let i=0; i<9000; i++) starPos[i] = (Math.random() - 0.5) * 200;
+            starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
+            const stars = new THREE.Points(starGeo, new THREE.PointsMaterial({ color: 0xffffff, size: 0.1, transparent: true, opacity: 0.8 }));
+            scene.add(stars);
+
+            const animate = () => {
+                requestAnimationFrame(animate);
+                stars.rotation.y += 0.0005;
+                renderer.render(scene, camera);
+            };
+            animate();
+        };
+
+        const initHeroScene = () => {
+            const container = document.getElementById('hero-3d-canvas');
+            if (!container) return; // Mencegah error jika tidak ada di halaman ini
+            const width = container.clientWidth || window.innerWidth / 2;
+            const height = container.clientHeight || 500;
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
+            camera.position.z = 5;
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(width, height);
+            container.appendChild(renderer.domElement);
+
+            scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+            const dir1 = new THREE.DirectionalLight(0x14B8A6, 1.5); dir1.position.set(10, 10, 5); scene.add(dir1);
+            const group = new THREE.Group(); scene.add(group);
+            const coreMesh = new THREE.Mesh(new THREE.TorusKnotGeometry(1.2, 0.4, 100, 16), new THREE.MeshPhysicalMaterial({ color: 0x4C1D95, emissive: 0x14B8A6 }));
+            group.add(coreMesh);
+
+            const animate = () => {
+                requestAnimationFrame(animate);
+                coreMesh.rotation.x += 0.01; coreMesh.rotation.y += 0.01;
+                renderer.render(scene, camera);
+            };
+            animate();
+        };
+
+        const initAboutScene = () => {
+            const container = document.getElementById('about-3d-canvas');
+            if (!container) return; // Mencegah error jika tidak ada di halaman ini
+            const width = container.clientWidth || 400;
+            const height = container.clientHeight || 380;
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 100);
+            camera.position.z = 4;
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(width, height);
+            container.appendChild(renderer.domElement);
+
+            scene.add(new THREE.AmbientLight(0xffffff, 0.7));
+            const group = new THREE.Group(); scene.add(group);
+            const innerMesh = new THREE.Mesh(new THREE.IcosahedronGeometry(1.2, 0), new THREE.MeshStandardMaterial({ color: 0x14B8A6, wireframe:true }));
+            group.add(innerMesh);
+
+            const animate = () => {
+                requestAnimationFrame(animate);
+                group.rotation.x += 0.003; group.rotation.y += 0.005;
+                renderer.render(scene, camera);
+            };
+            animate();
+        };
+
+        window.onload = () => { initBgScene(); initHeroScene(); initAboutScene(); };
+    </script>
+</body>
+</html>
