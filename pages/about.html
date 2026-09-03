@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tentang - Digital Portfolio 3D</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+    <div id="bg-3d-canvas"></div>
+
+    <header id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo"><div class="logo-icon">P</div><span>Portfolio<span>.</span></span></a>
+            <nav class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="tentang.html" class="nav-link active">About</a>
+                <a href="proyek.html" class="nav-link">Projects</a>
+                <a href="jaringan.html" class="nav-link">Modules</a>
+                <a href="kontak.html" class="nav-link">Contact</a>
+                <a href="kontak.html" class="connect-btn">Connect</a>
+            </nav>
+            <button class="mobile-menu-btn" id="mobile-menu-btn"><i data-lucide="menu" style="width:24px; height:24px;"></i></button>
+        </div>
+        <div class="mobile-menu" id="mobile-menu">
+            <a href="index.html" class="mobile-nav-link">Home</a>
+            <a href="tentang.html" class="mobile-nav-link">About</a>
+            <a href="proyek.html" class="mobile-nav-link">Projects</a>
+            <a href="jaringan.html" class="mobile-nav-link">Modules</a>
+            <a href="kontak.html" class="mobile-nav-link">Contact</a>
+        </div>
+    </header>
+
+    <main style="padding-top: 100px;">
+        <!-- About Section -->
+        <section id="about">
+            <div class="section-header">
+                <h2>Tentang Saya</h2>
+                <p>Mengenal lebih dekat tentang profil, latar belakang pendidikan, dan kompetensi saya.</p>
+            </div>
+            <div class="about-grid">
+                <div id="about-3d-canvas"></div>
+                <div class="about-details">
+                    <div class="biodata-card">
+                        <h3><span></span> Personal Information</h3>
+                        <div class="bio-info-grid">
+                            <div class="bio-item"><label>Nama Lengkap</label><p>AKHMAD GAZA GHOZALI</p></div>
+                            <div class="bio-item"><label>Sekolah</label><p>SMAN 2 MOJOKERTO</p></div>
+                            <div class="bio-item"><label>Jurusan & Kelas</label><p>Rekayasa Perangkat Lunak (Kelas XII)</p></div>
+                            <div class="bio-item"><label>Email</label><p>akhmadgazagh@gmail.com</p></div>
+                        </div>
+                    </div>
+                    <div class="skills-container">
+                        <h3>Technical Skills</h3>
+                        <div class="skills-grid">
+                            <div class="skill-card">
+                                <header><i data-lucide="code" style="width:18px; height:18px;"></i><h4>Web Development</h4></header>
+                                <div class="skill-tags"><span class="tag">React.js</span><span class="tag">Three.js</span><span class="tag">CSS3</span></div>
+                            </div>
+                            <div class="skill-card">
+                                <header><i data-lucide="layers" style="width:18px; height:18px;"></i><h4>UI/UX & 3D</h4></header>
+                                <div class="skill-tags"><span class="tag">Figma</span><span class="tag">Blender</span><span class="tag">Prototyping</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-logo">Portfolio<span>.</span></div>
+        <p>Digital Portfolio Class XII • Built with HTML, Native CSS & Three.js</p>
+        <div class="copyright">© 2026 AKHMAD GAZA GHOZALI. All Rights Reserved.</div>
+    </footer>
+
+    <div id="notification-box"><div class="toast-dot"></div><span id="notification-text">Notifikasi</span></div>
+
+    <!-- SILAHKAN PASTE KODE <script> DARI index.html KE SINI (SAMA PERSIS) -->
+    <script src="script-sama-seperti-index.js"></script> 
+    <!-- Atau copy isi script dari file index.html ke sini agar fiturnya nyala -->
+</body>
+</html>
